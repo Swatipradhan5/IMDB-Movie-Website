@@ -1,22 +1,34 @@
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 
 function Movies(){
 
     const [movies, setMovies] = useState([]);
+    const [pageNo, setPageNo] = useState(1); 
+
+    const handlePrev = () =>{
+        if(pageNo > 1){
+            setPageNo(pageNo-1);
+        }
+    }
+
+    const handleNext = () =>{
+        setPageNo(pageNo+1);
+    }
 
     // to avoid re-rendering of the component, which might end up in infinite loop.
     // we used useEffect to make the network call and setMovie only during mounting phase.
 
     useEffect(()=>{
-        axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=699d03f895338f3961551d2a377969bf`)
+        axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=699d03f895338f3961551d2a377969bf&page=${pageNo}`)
         .then(function (res){
         // console.log(res);
         // console.log(res.data.results);
         setMovies(res.data.results);
         })
-    },[]);
+    },[pageNo]);
     
     return(
         <div>
@@ -32,6 +44,7 @@ function Movies(){
                 
                
             </div>
+            <Pagination pageNo={pageNo} handlePrev={handlePrev} handleNext={handleNext}/>
         </div>
     );
 }
