@@ -1,6 +1,17 @@
 export default function MovieCard(props){
 
-    let {watchList, handleAddToWatchList, handleRemoveFromWatchList, id, name, poster_path } = props;
+    let {movieObj,handleAddToWatchList,handleRemoveFromWatchList,name,watchList,poster_path} = props;
+
+    function isContain(movieObj){
+        for(let i=0;i<watchList.length;i++)
+        {
+            if(watchList[i].id === movieObj.id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     return(
 
@@ -12,14 +23,14 @@ export default function MovieCard(props){
                     backgroundImage:`url(https://image.tmdb.org/t/p/original/${poster_path})`
                 }}>
 
-{/* added to watchlist through conditional rendering */}
+            {/* added to watchlist through conditional rendering */}
 
-            {watchList.includes(id) ?
-                 <div onClick={()=>handleRemoveFromWatchList(id)} className="m-2 p-1 text-2xl bg-slate-100/50
+            {isContain(movieObj) ?
+                 <div onClick={()=>handleRemoveFromWatchList(movieObj)} className="m-2 p-1 text-2xl bg-slate-100/50
                  text-yellow-500 border border-none rounded-lg">
                     <i class="fa-solid fa-star"></i>
                 </div>
-                :<div onClick={()=>handleAddToWatchList(id)} 
+                :<div onClick={()=>handleAddToWatchList(movieObj)} 
                 className="m-2 p-1 text-2xl bg-slate-100/50
                 text-black border border-none rounded-lg">
                     <i class="fa-solid fa-plus"></i>

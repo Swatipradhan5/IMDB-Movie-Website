@@ -3,11 +3,13 @@ import MovieCard from "./MovieCard";
 import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 
-function Movies(){
+function Movies(props){
+
+    let {watchList, setWatchList, handleAddToWatchList, handleRemoveFromWatchList} = props;
 
     const [movies, setMovies] = useState([]);
     const [pageNo, setPageNo] = useState(1); 
-    const [watchList, setWatchList] = useState([]);
+    
 
     const handlePrev = () =>{
         if(pageNo > 1){
@@ -19,22 +21,7 @@ function Movies(){
         setPageNo(pageNo+1);
     }
 
-    const handleAddToWatchList = (movieId) =>{
-        //console.log("Inside add to watchlist");
-        //console.log(movieId);
-        let newWatchlist = [...watchList, movieId];
-        localStorage.setItem("movieApp",JSON.stringify(newWatchlist));
-        setWatchList(newWatchlist);
-    }
-
-    const handleRemoveFromWatchList = (movieId) =>{
-        let filteredWatchlist = watchList.filter((id)=>{
-            return id !== movieId;
-        })
-
-        localStorage.setItem("movieApp",JSON.stringify(filteredWatchlist));
-        setWatchList(filteredWatchlist);
-    }
+    
     // to avoid re-rendering of the component, which might end up in infinite loop.
     // we used useEffect to make the network call and setMovie only during mounting phase.
 
@@ -48,9 +35,17 @@ function Movies(){
     },[pageNo]);
 
     // fetching data from localStorage only for the first mounting phase
+
     useEffect(()=>{
         let moviesFromLocalStorage = localStorage.getItem("movieApp");
+        
+        if(!moviesFromLocalStorage)
+        {
+            return;
+        }
+  
         setWatchList(JSON.parse(moviesFromLocalStorage));
+  
     },[])
     
     return(
@@ -58,12 +53,14 @@ function Movies(){
             <div className="text-2xl font-bold text-center m-5">
                 Trending Movies
             </div>
+            {/* movie card component */}
+            
             <div className="flex flex-wrap justify-around gap-8 m-8">
                 {
                     movies.map((movieObj) =>{
-                        return <MovieCard name={movieObj.title} 
-                        key={movieObj.id} 
-                        id={movieObj.id}
+                        return <MovieCard key={movieObj.id} 
+                        name={movieObj.title} 
+                        movieObj={movieObj}
                         poster_path={movieObj.poster_path}
                         watchList={watchList}
                         handleAddToWatchList={handleAddToWatchList}
