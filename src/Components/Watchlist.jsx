@@ -1,15 +1,29 @@
+import { useEffect, useState } from "react";
 import genreId from "../Utility/genreId";
 function Watchlist(props){
 
     let {watchList,  handleRemoveFromWatchList} = props;
+    let [genreList, setGenreList] = useState(["All Genre"]);
+
+    useEffect(()=>{
+        let temp = watchList.map((movieObj)=>{
+            return genreId[movieObj.genre_ids[0]];
+        });
+
+        temp = new Set(temp);
+        setGenreList(["All Genre",...temp]);
+    },[watchList])
     
     return(
         <>
             <div className="flex justify-center gap-2 my-3">
-                <span className="h-[3rem] w-[10rem] bg-blue-300 text-white text-center px-1 py-2
-                border rounded-full text-lg">
-                    All Genre
-                </span>
+                {genreList.map((genre)=>{
+                    return <span className="h-[3rem] w-[10rem] bg-blue-300 text-white text-center px-1 py-2
+                                border rounded-full text-lg">
+                                    {genre}
+                                </span>
+                })}
+                
             </div>
             <div className="flex justify-center my-3">
                 <input type="text" placeholder="Search for a Movie" 

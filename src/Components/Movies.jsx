@@ -25,17 +25,7 @@ function Movies(props){
 
     // fetching data from localStorage only for the first mounting phase
 
-    useEffect(()=>{
-        let moviesFromLocalStorage = localStorage.getItem("movieApp");
-        
-        if(!moviesFromLocalStorage)
-        {
-            return;
-        }
-  
-        setWatchList(JSON.parse(moviesFromLocalStorage));
-  
-    },[])
+    
     
     return(
         <div>

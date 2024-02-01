@@ -4,7 +4,7 @@ import Banner from './Components/Banner';
 import Movies from './Components/Movies';
 import Navbar from './Components/Navbar';
 import Watchlist from './Components/Watchlist';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
@@ -38,6 +38,18 @@ function App() {
       localStorage.setItem("movieApp",JSON.stringify(filteredWatchlist));
       setWatchList(filteredWatchlist);
     }
+
+    useEffect(()=>{
+      let moviesFromLocalStorage = localStorage.getItem("movieApp");
+      
+      if(!moviesFromLocalStorage)
+      {
+          return;
+      }
+
+      setWatchList(JSON.parse(moviesFromLocalStorage));
+
+  },[])
 
     
     
