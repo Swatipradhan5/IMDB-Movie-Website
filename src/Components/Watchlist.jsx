@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import genreId from "../Utility/genreId";
 function Watchlist(props){
 
-    let {watchList,  handleRemoveFromWatchList} = props;
+    let {watchList,  handleRemoveFromWatchList,setWatchList} = props;
     let [genreList, setGenreList] = useState(["All Genre"]);
     let [currentGenre, setCurrentGenre] = useState("All Genre");
     let [search,setSearch]=useState("");
@@ -13,6 +13,20 @@ function Watchlist(props){
 
     let handleSearch = (e)=>{
         setSearch(e.target.value);
+    }
+
+    let sortIncreasing = ()=>{
+        let sorted = watchList.sort((movieA,movieB)=>{
+            return movieA.vote_average-movieB.vote_average;
+        })
+        setWatchList([...sorted]);
+    }
+
+    let sortDecreasing = ()=>{
+        let sorted = watchList.sort((movieA,movieB)=>{
+            return movieB.vote_average-movieA.vote_average;
+        })
+        setWatchList([...sorted]);
     }
 
     useEffect(()=>{
@@ -45,12 +59,12 @@ function Watchlist(props){
                         <tr className="">
                             <th className="text-left px-10">Name</th>
                             <th className="flex gap-2 justify-center mt-2">
-                                <div className="bg-slate-100 border border-gray-300 rounded-full p-1 
+                                <div onClick={sortIncreasing} className="bg-slate-100 border border-gray-300 rounded-full p-1 
                                 hover:cursor-pointer hover:scale-95">
                                     <i class="fa-solid fa-chevron-up"></i>
                                 </div>
                                 <div>Ratings</div>
-                                <div className="bg-slate-100 border border-gray-300 rounded-full p-1 
+                                <div onClick={sortDecreasing} className="bg-slate-100 border border-gray-300 rounded-full p-1 
                                 hover:cursor-pointer hover:scale-95">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
