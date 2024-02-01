@@ -4,6 +4,16 @@ function Watchlist(props){
 
     let {watchList,  handleRemoveFromWatchList} = props;
     let [genreList, setGenreList] = useState(["All Genre"]);
+    let [currentGenre, setCurrentGenre] = useState("All Genre");
+    let [search,setSearch]=useState("");
+
+    let handleFilter = (genre) =>{
+        setCurrentGenre(genre);
+    }
+
+    let handleSearch = (e)=>{
+        setSearch(e.target.value);
+    }
 
     useEffect(()=>{
         let temp = watchList.map((movieObj)=>{
@@ -18,14 +28,13 @@ function Watchlist(props){
         <>
             <div className="flex justify-center gap-2 my-3">
                 {genreList.map((genre)=>{
-                    return <span className="h-[3rem] w-[10rem] bg-blue-300 text-white text-center px-1 py-2
-                                border rounded-full text-lg">
-                                    {genre}
-                                </span>
-                })}
+                    return <span key={genre} onClick={()=>handleFilter(genre)} className={
+                        currentGenre === genre ? "hover:cursor-pointer h-[3rem] w-[10rem] bg-blue-300 text-white text-center px-1 py-2 border rounded-full text-lg" 
+                        : "hover:cursor-pointer h-[3rem] w-[10rem] bg-gray-200 text-white text-center px-1 py-2 border rounded-full text-lg"}>{genre}</span>
+                })}  
                 
             </div>
-            <div className="flex justify-center my-3">
+            <div onChange={handleSearch} className="flex justify-center my-3">
                 <input type="text" placeholder="Search for a Movie" 
                 className="border border-cyan-400 rounded-full bg-slate-100 w-[20rem] h-[3rem] pl-10 outline-none"/>
             </div>
@@ -52,7 +61,15 @@ function Watchlist(props){
                         </tr>
                     </thead>
                     <tbody>
-                        {watchList.map((movieObj)=>{
+                        {watchList.filter((obj)=>{
+                            if(currentGenre === "All Genre")
+                                return true;
+                            else
+                                return genreId[obj.genre_ids[0]] === currentGenre;
+                        }).filter((obj)=>{
+                            return obj.title.toLowerCase().includes(search.toLowerCase());
+                        })
+                        .map((movieObj)=>{
                             return <tr className="border-b-2">
                                 <td className="flex items-center px-4 m-3">
                                     <img className="h-[5rem] w-[12rem]" src={`https://image.tmdb.org/t/p/original/${movieObj.poster_path}`} alt="" />
