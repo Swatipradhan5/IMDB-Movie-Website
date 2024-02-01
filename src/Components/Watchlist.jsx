@@ -1,7 +1,7 @@
 import genreId from "../Utility/genreId";
-function Watchlist(){
+function Watchlist(props){
 
-    let movies = [];
+    let {watchList,  handleRemoveFromWatchList} = props;
     
     return(
         <>
@@ -38,7 +38,7 @@ function Watchlist(){
                         </tr>
                     </thead>
                     <tbody>
-                        {movies.map((movieObj)=>{
+                        {watchList.map((movieObj)=>{
                             return <tr className="border-b-2">
                                 <td className="flex items-center px-4 m-3">
                                     <img className="h-[5rem] w-[12rem]" src={`https://image.tmdb.org/t/p/original/${movieObj.poster_path}`} alt="" />
@@ -47,7 +47,7 @@ function Watchlist(){
                                 <td>{movieObj.vote_average}</td> 
                                 <td>{movieObj.popularity}</td>
                                 <td>{genreId[movieObj.genre_ids[0]]}</td>
-                                <td className="text-red-500">Remove</td>
+                                <td onClick={()=> handleRemoveFromWatchList(movieObj)} className="text-red-500 hover:cursor-pointer">Remove</td>
                             </tr>
                             
                         })}

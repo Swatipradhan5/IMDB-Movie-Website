@@ -5,8 +5,12 @@ export default function MovieCard(props){
     function isContain(movieObj){
         for(let i=0;i<watchList.length;i++)
         {
+            // console.log("inside for loop",i);
+            // console.log(watchList[i]);
+            // //console.log(movieObj.id);
             if(watchList[i].id === movieObj.id)
             {
+                console.log(watchList[i].id);
                 return true;
             }
         }
