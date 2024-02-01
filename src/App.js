@@ -9,6 +9,18 @@ import { useState } from 'react';
 function App() {
 
     let [watchList, setWatchList] = useState([]);
+    const [pageNo, setPageNo] = useState(1); 
+    
+
+    const handlePrev = () =>{
+        if(pageNo > 1){
+            setPageNo(pageNo-1);
+        }
+    }
+
+    const handleNext = () =>{
+        setPageNo(pageNo+1);
+    }
 
     const handleAddToWatchList = (movieObj) =>{
       //console.log("Inside add to watchlist");
@@ -42,6 +54,9 @@ function App() {
                     setWatchList={setWatchList}
                     handleAddToWatchList={handleAddToWatchList}
                     handleRemoveFromWatchList={handleRemoveFromWatchList}
+                    pageNo={pageNo}
+                    handleNext={handleNext}
+                    handlePrev={handlePrev}
                     />
           </>
         }></Route>

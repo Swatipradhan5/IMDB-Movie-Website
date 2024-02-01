@@ -5,21 +5,10 @@ import Pagination from "./Pagination";
 
 function Movies(props){
 
-    let {watchList, setWatchList, handleAddToWatchList, handleRemoveFromWatchList} = props;
+    let {watchList, setWatchList, handleAddToWatchList, handleRemoveFromWatchList, pageNo, handleNext, handlePrev} = props;
 
     const [movies, setMovies] = useState([]);
-    const [pageNo, setPageNo] = useState(1); 
-    
-
-    const handlePrev = () =>{
-        if(pageNo > 1){
-            setPageNo(pageNo-1);
-        }
-    }
-
-    const handleNext = () =>{
-        setPageNo(pageNo+1);
-    }
+   
 
     
     // to avoid re-rendering of the component, which might end up in infinite loop.
