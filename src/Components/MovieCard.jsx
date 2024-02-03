@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function MovieCard(props){
 
     let {movieObj,handleAddToWatchList,handleRemoveFromWatchList,name,watchList,poster_path} = props;
@@ -41,9 +43,12 @@ export default function MovieCard(props){
                 </div>  
             }
 
-            <div className="text-white bg-gray-500/50 w-full p-3 text-center text-xl">
+            <Link to={`/movieDetail/${movieObj.id}`} className="w-full"> 
+                <div className="text-white bg-gray-500/50 w-full p-3 text-center text-xl">
                 {name}
-            </div>
+                </div>
+            </Link>
+            
         </div>
     )
 }

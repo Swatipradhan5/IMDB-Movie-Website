@@ -4,6 +4,7 @@ import Banner from './Components/Banner';
 import Movies from './Components/Movies';
 import Navbar from './Components/Navbar';
 import Watchlist from './Components/Watchlist';
+import MovieDetail from './Components/MovieDetail';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -81,6 +82,13 @@ function App() {
                       />
           </>
         }></Route>
+
+        <Route path='/movieDetail/:movieId' element={
+          <>
+            <MovieDetail/>
+          </>
+        }></Route>
+        
         
       </Routes>
     
