@@ -69,25 +69,19 @@ function App() {
                     handleRemoveFromWatchList={handleRemoveFromWatchList}
                     pageNo={pageNo}
                     handleNext={handleNext}
-                    handlePrev={handlePrev}
-                    />
+                    handlePrev={handlePrev}/>
           </>
+            
+          
         }></Route>
 
         <Route path='/watchlist' element={
-          <>
-            <Watchlist watchList={watchList}
+          <Watchlist watchList={watchList}
                        handleRemoveFromWatchList={handleRemoveFromWatchList}
-                       setWatchList={setWatchList}
-                      />
-          </>
+                       setWatchList={setWatchList}/>
         }></Route>
 
-        <Route path='/movieDetail/:movieId' element={
-          <>
-            <MovieDetail/>
-          </>
-        }></Route>
+        <Route path='/movieDetail/:movieId' element={<MovieDetail/>}></Route>
         
         
       </Routes>
